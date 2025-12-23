@@ -1,0 +1,13 @@
+# Sample request log
+ts=2026-01-01T00:00:00Z method=GET path=/v1/ping status=OK latency_ms=12.3
+ts=2026-01-01T00:00:01Z method=GET path=/v1/ping status=OK latency_ms=8.5
+ts=2026-01-01T00:00:02Z method=GET path=/v1/ping status=OK latency_ms=14.1
+ts=2026-01-01T00:00:03Z method=GET path=/v1/ping status=OK latency_ms=16.9
+ts=2026-01-01T00:00:04Z method=GET path=/v1/ping status=OK latency_ms=18.2
+ts=2026-01-01T00:00:05Z method=GET path=/v1/ping status=OK latency_ms=21.0
+ts=2026-01-01T00:00:06Z method=GET path=/v1/ping status=OK latency_ms=24.7
+ts=2026-01-01T00:00:07Z method=GET path=/v1/ping status=OK latency_ms=29.3
+ts=2026-01-01T00:00:08Z method=GET path=/v1/ping status=OK latency_ms=31.4
+ts=2026-01-01T00:00:09Z method=GET path=/v1/ping status=OK latency_ms=42.8
+ts=2026-01-01T00:00:10Z method=GET path=/v1/ping status=ERROR latency_ms=85.1
+ts=2026-01-01T00:00:11Z method=GET path=/v1/ping status=ERROR latency_ms=64.0
