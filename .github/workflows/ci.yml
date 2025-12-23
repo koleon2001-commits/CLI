@@ -24,11 +24,12 @@ jobs:
       - name: Test
         run: ctest --test-dir build --output-on-failure
 
-      - name: Valgrind (smoke)
+            - name: Valgrind (smoke)
         run: |
           cmake -S . -B build_dbg -DCMAKE_BUILD_TYPE=Debug
-          cmake --build build_dbg -j
+          cmake --build build_dbg -j --target log_analyzer
           valgrind --leak-check=full --show-leak-kinds=all --error-exitcode=1 ./build_dbg/log_analyzer --input data/sample.log
+
 
   docker-build:
     runs-on: ubuntu-latest
