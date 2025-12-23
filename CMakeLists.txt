@@ -17,16 +17,11 @@ if(ENABLE_WERROR)
   target_compile_options(loglib PRIVATE -Werror)
 endif()
 
-add_executable(log_analyzer src/main.cpp)
-target_link_libraries(log_analyzer PRIVATE loglib)
-target_compile_options(log_analyzer PRIVATE -Wall -Wextra -Wpedantic)
-
 add_executable(unit_tests
     tests/test_stats.cpp
     tests/test_parser.cpp
 )
 target_link_libraries(unit_tests PRIVATE loglib)
-target_compile_options(unit_tests PRIVATE -Wall -Wextra -Wpedantic)
-
+...
 enable_testing()
 add_test(NAME unit_tests COMMAND unit_tests)
