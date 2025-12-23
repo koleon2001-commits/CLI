@@ -1,3 +1,5 @@
+![ci](https://github.com/koleon2001-commits/CLI/actions/workflows/ci.yml/badge.svg)
+
 # CLI Log Analyzer (C++17) — Systems Tooling Demo for Data Center Simulation
 
 This repository is a **systems-oriented CLI** that parses request logs and reports reliability + latency KPIs
