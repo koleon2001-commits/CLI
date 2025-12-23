@@ -29,3 +29,4 @@ target_compile_options(test_stats PRIVATE -Wall -Wextra -Wpedantic)
 enable_testing()
 add_test(NAME test_parser COMMAND test_parser)
 add_test(NAME test_stats COMMAND test_stats)
+
