@@ -1,0 +1,39 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install deps
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake g++ make valgrind
+
+      - name: Configure
+        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+
+      - name: Build
+        run: cmake --build build -j
+
+      - name: Test
+        run: ctest --test-dir build --output-on-failure
+
+      - name: Valgrind (smoke)
+        run: |
+          cmake -S . -B build_dbg -DCMAKE_BUILD_TYPE=Debug
+          cmake --build build_dbg -j
+          valgrind --leak-check=full --show-leak-kinds=all --error-exitcode=1 ./build_dbg/log_analyzer --input data/sample.log
+
+  docker-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build Docker image
+        run: docker build -t cli-log-analyzer:ci .
+
