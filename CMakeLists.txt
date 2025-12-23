@@ -7,31 +7,63 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 option(ENABLE_WERROR "Treat warnings as errors" OFF)
 
-# -------- Library --------
-add_library(loglib
-    src/parser.cpp
-    src/stats.cpp
-)
-target_include_directories(loglib PUBLIC include)
-target_compile_options(loglib PRIVATE -Wall -Wextra -Wpedantic)
-if(ENABLE_WERROR)
-  target_compile_options(loglib PRIVATE -Werror)
+# ---- Compiler warnings (MSVC vs GCC/Clang) ----
+if(MSVC)
+  set(PROJECT_WARNINGS /W4)
+else()
+  set(PROJECT_WARNINGS -Wall -Wextra -Wpedantic)
 endif()
 
-# -------- Main executable --------
+# ---- Library ----
+add_library(loglib
+  src/parser.cpp
+  src/stats.cpp
+)
+target_include_directories(loglib PUBLIC include)
+target_compile_options(loglib PRIVATE ${PROJECT_WARNINGS})
+if(ENABLE_WERROR)
+  if(MSVC)
+    target_compile_options(loglib PRIVATE /WX)
+  else()
+    target_compile_options(loglib PRIVATE -Werror)
+  endif()
+endif()
+
+# ---- Main executable ----
 add_executable(log_analyzer src/main.cpp)
 target_link_libraries(log_analyzer PRIVATE loglib)
-target_compile_options(log_analyzer PRIVATE -Wall -Wextra -Wpedantic)
+target_compile_options(log_analyzer PRIVATE ${PROJECT_WARNINGS})
+if(ENABLE_WERROR)
+  if(MSVC)
+    target_compile_options(log_analyzer PRIVATE /WX)
+  else()
+    target_compile_options(log_analyzer PRIVATE -Werror)
+  endif()
+endif()
 
-# -------- Tests (split executables; each file has its own main) --------
+# ---- Tests (split executables; each file has its own main) ----
 add_executable(test_parser tests/test_parser.cpp)
 target_link_libraries(test_parser PRIVATE loglib)
-target_compile_options(test_parser PRIVATE -Wall -Wextra -Wpedantic)
+target_compile_options(test_parser PRIVATE ${PROJECT_WARNINGS})
+if(ENABLE_WERROR)
+  if(MSVC)
+    target_compile_options(test_parser PRIVATE /WX)
+  else()
+    target_compile_options(test_parser PRIVATE -Werror)
+  endif()
+endif()
 
 add_executable(test_stats tests/test_stats.cpp)
 target_link_libraries(test_stats PRIVATE loglib)
-target_compile_options(test_stats PRIVATE -Wall -Wextra -Wpedantic)
+target_compile_options(test_stats PRIVATE ${PROJECT_WARNINGS})
+if(ENABLE_WERROR)
+  if(MSVC)
+    target_compile_options(test_stats PRIVATE /WX)
+  else()
+    target_compile_options(test_stats PRIVATE -Werror)
+  endif()
+endif()
 
 enable_testing()
 add_test(NAME test_parser COMMAND test_parser)
-add_test(NAME test_stats COMMAND test_stats)
+add_test(NAME test_stats  COMMAND test_stats)
